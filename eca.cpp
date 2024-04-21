@@ -7,16 +7,10 @@ ECA::ECA() {
     }
 }
 
-ECA::ECA(std::vector<bool> init_state){
-    this->state.push_back(init_state);
-    for (int i=0; i < 8; ++i){
-        this->rule.push_back(false);
-    }
-}
 
 ECA::ECA(std::vector<bool> init_state, std::vector<bool> rule){
     this->state.push_back(init_state);
-    this->state.push_back(rule);
+    this->rule = rule;
 }
 
 std::vector<std::vector<bool> > ECA::getState()
@@ -27,7 +21,8 @@ std::vector<std::vector<bool> > ECA::getState()
 void ECA::computeMultipleGeneration(unsigned int num_generation)
 {
     for (unsigned int gen = 0; gen < num_generation; ++gen){
-        state.push_back(getNextGeneration());
+        std::vector<bool> next_gen = getNextGeneration();
+        state.push_back(next_gen);
     }
 }
 

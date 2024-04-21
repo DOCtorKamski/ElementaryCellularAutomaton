@@ -2,6 +2,7 @@
 #define MAINWINDOW_H
 
 #include <QMainWindow>
+#include "eca.h"
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -18,6 +19,21 @@ public:
     ~MainWindow();
 
 private:
+    void setupAutomaton();
+    void runAutomaton(ECA *automaton, uint num_generations);
+    void drawState(std::vector<std::vector<bool>> state, uint pixelSize);
+    void addImageToGraphicsView(QImage *image);
+
     Ui::MainWindow *ui;
+    int gen_length;
+    std::vector<bool> init;
+    ECA *automaton;
+    QImage *image_buffer;
+    QColor alive;
+    QColor dead;
+    QColor background;
+
+private slots:
+    void start();
 };
 #endif // MAINWINDOW_H
