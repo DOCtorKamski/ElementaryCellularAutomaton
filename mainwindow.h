@@ -23,6 +23,8 @@ private:
     void runAutomaton(ECA *automaton, uint num_generations);
     void drawState(std::vector<std::vector<bool>> state, uint pixelSize);
     void addImageToGraphicsView(QImage *image);
+    int convertBinToDec(QString binary);
+    QString convertDecToBin(int decimal);
 
     Ui::MainWindow *ui;
     int gen_length;
@@ -35,5 +37,7 @@ private:
 
 private slots:
     void start();
+    void readBinaryRuleset(QString binary);
+    void readDecimalRuleset(int decimal);
 };
 #endif // MAINWINDOW_H
