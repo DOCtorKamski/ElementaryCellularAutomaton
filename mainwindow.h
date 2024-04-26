@@ -37,6 +37,7 @@ private:
     QColor alive;
     QColor dead;
     QColor background;
+    bool image_was_generated = false;
 
 private slots:
     void start();
@@ -45,5 +46,6 @@ private slots:
     void zoomIn();
     void zoomOut();
     void zoomReset();
+    void saveImage();
 };
 #endif // MAINWINDOW_H

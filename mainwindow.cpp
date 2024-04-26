@@ -1,6 +1,8 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
 #include <QPixmap>
+#include <QFileDialog>
+#include <QMessageBox>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -16,6 +18,7 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pushButton_zoomMinus, SIGNAL(clicked()), this, SLOT(zoomOut()));
     connect(ui->pushButton_zoomPlus, SIGNAL(clicked()), this, SLOT(zoomIn()));
     connect(ui->pushButton_zoomReset, SIGNAL(clicked()), this, SLOT(zoomReset()));
+    connect(ui->pushButton_saveImage, SIGNAL(clicked()), this, SLOT(saveImage()));
 
 
     //default colors
@@ -116,6 +119,7 @@ void MainWindow::drawState(std::vector<std::vector<bool>> state, uint cell_size)
 
     // add QImage to graphicsview
     addImageToGraphicsView(image_buffer);
+    image_was_generated = true;
 }
 
 void MainWindow::addImageToGraphicsView(QImage *image)
@@ -186,4 +190,22 @@ void MainWindow::zoomOut() {
 void MainWindow::zoomReset()
 {
     ui->graphicsView->resetTransform();
+}
+
+void MainWindow::saveImage()
+{
+    if (!image_was_generated){
+        QMessageBox::information(this, "Image was not generated", "no image");
+        return;
+    }
+
+    QString filename = QFileDialog::getSaveFileName(this, "Save as", QDir::currentPath(),
+                                                    "Image Formats (*.png *.jpg *.jpeg *.tiff *.ppm *.bmp *.xpm");
+
+    QFileInfo file(filename);
+    if(!file.baseName().isEmpty() && file.suffix().isEmpty())
+        filename += ".png";
+
+    if(!image_buffer->save(filename))
+        QMessageBox::information(this, "Error while saving image", "Image not saved!");
 }
