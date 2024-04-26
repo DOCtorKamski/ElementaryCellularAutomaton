@@ -129,6 +129,29 @@
                 </property>
                </widget>
               </item>
+              <item>
+               <widget class="QCheckBox" name="checkBox_initRandom">
+                <property name="text">
+                 <string>Random init</string>
+                </property>
+               </widget>
+              </item>
+              <item>
+               <widget class="QSpinBox" name="spinBox_initLivingProcent">
+                <property name="suffix">
+                 <string>%</string>
+                </property>
+                <property name="prefix">
+                 <string>Living cell: </string>
+                </property>
+                <property name="maximum">
+                 <number>100</number>
+                </property>
+                <property name="value">
+                 <number>50</number>
+                </property>
+               </widget>
+              </item>
              </layout>
             </widget>
            </item>

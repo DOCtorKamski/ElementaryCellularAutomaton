@@ -34,14 +34,23 @@ MainWindow::~MainWindow()
 
 void MainWindow::setInitLine()
 {
-    // init 1 life cell in center
     init.clear();
     gen_length = ui->spinBox_lineLength->value();
+
+    if (ui->checkBox_initRandom->isChecked()){
+        //make init line random
+        for (int i = 0; i < gen_length; ++i){
+            init.push_back((rand() % 100) < ui->spinBox_initLivingProcent->value());
+        }
+    }
+    else {
+    // default init 1 life cell in center
     this->init.reserve(gen_length);
     for (int i = 0; i < gen_length; ++i){
         init.push_back(false);
     }
     this->init[gen_length/2] = true;
+    }
 }
 
 void MainWindow::setupAutomaton()
