@@ -1,8 +1,9 @@
 #ifndef MAINWINDOW_H
 #define MAINWINDOW_H
 
-#include <QMainWindow>
 #include "eca.h"
+#include <QMainWindow>
+#include <QGraphicsScene>
 
 QT_BEGIN_NAMESPACE
 namespace Ui {
@@ -30,8 +31,9 @@ private:
     Ui::MainWindow *ui;
     int gen_length;
     std::vector<bool> init;
-    ECA *automaton;
-    QImage *image_buffer;
+    ECA *automaton = nullptr;
+    QImage *image_buffer = nullptr;
+    QGraphicsScene *scene = nullptr;
     QColor alive;
     QColor dead;
     QColor background;

@@ -1,6 +1,5 @@
 #include "mainwindow.h"
 #include "./ui_mainwindow.h"
-#include <QGraphicsScene>
 #include <QPixmap>
 
 MainWindow::MainWindow(QWidget *parent)
@@ -21,7 +20,7 @@ MainWindow::MainWindow(QWidget *parent)
     background = QColor (70, 70, 70);
 
     //setup QGraphicsScene
-    QGraphicsScene *scene = new QGraphicsScene();
+    scene = new QGraphicsScene();
     ui->graphicsView->setScene(scene);
     scene->clear();
     scene->setBackgroundBrush(QBrush(background));    
@@ -30,6 +29,7 @@ MainWindow::MainWindow(QWidget *parent)
 MainWindow::~MainWindow()
 {
     delete ui;
+    delete automaton;
 }
 
 void MainWindow::setInitLine()
@@ -44,12 +44,12 @@ void MainWindow::setInitLine()
         }
     }
     else {
-    // default init 1 life cell in center
-    this->init.reserve(gen_length);
-    for (int i = 0; i < gen_length; ++i){
-        init.push_back(false);
-    }
-    this->init[gen_length/2] = true;
+        // default init 1 life cell in center
+        this->init.reserve(gen_length);
+        for (int i = 0; i < gen_length; ++i){
+            init.push_back(false);
+        }
+        this->init[gen_length/2] = true;
     }
 }
 
@@ -63,7 +63,11 @@ void MainWindow::setupAutomaton()
     }
 
     setInitLine();
-    this->automaton = new ECA(init, rule);
+    if(automaton){
+        delete automaton;
+        automaton = nullptr;
+    }
+    automaton = new ECA(init, rule);
 }
 
 void MainWindow::runAutomaton(ECA *automaton, uint num_generations)
@@ -81,6 +85,11 @@ void MainWindow::drawState(std::vector<std::vector<bool>> state, uint cell_size)
 
     int img_size_x = state.at(0).size() * cell_size;
     int img_size_y = state.size() * cell_size;
+
+    if (image_buffer){
+        delete image_buffer;
+        image_buffer = nullptr;
+    }
     image_buffer = new QImage(img_size_x, img_size_y, QImage::Format_RGB32);
 
     for (uint y = 0; y < state.size(); ++y){
