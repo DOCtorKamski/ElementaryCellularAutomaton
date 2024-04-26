@@ -42,5 +42,8 @@ private slots:
     void start();
     void readBinaryRuleset(QString binary);
     void readDecimalRuleset(int decimal);
+    void zoomIn();
+    void zoomOut();
+    void zoomReset();
 };
 #endif // MAINWINDOW_H

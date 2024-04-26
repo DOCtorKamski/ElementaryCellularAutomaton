@@ -13,6 +13,10 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->lineEdit_rule, SIGNAL(textChanged(QString)), this, SLOT(readBinaryRuleset(QString)));
     connect(ui->spinBox_ruleDec, SIGNAL(valueChanged(int)), this, SLOT(readDecimalRuleset(int)));
 
+    connect(ui->pushButton_zoomMinus, SIGNAL(clicked()), this, SLOT(zoomOut()));
+    connect(ui->pushButton_zoomPlus, SIGNAL(clicked()), this, SLOT(zoomIn()));
+    connect(ui->pushButton_zoomReset, SIGNAL(clicked()), this, SLOT(zoomReset()));
+
 
     //default colors
     alive = QColor(250, 250, 250);
@@ -169,4 +173,17 @@ void MainWindow::readDecimalRuleset(int decimal) {
     bool signalsBlocked = ui->lineEdit_rule->blockSignals(true);
     ui->lineEdit_rule->setText(convertDecToBin(decimal));
     ui->lineEdit_rule->blockSignals(signalsBlocked);
+}
+
+void MainWindow::zoomIn() {
+    ui->graphicsView->scale(1.2, 1.2);
+}
+
+void MainWindow::zoomOut() {
+    ui->graphicsView->scale(0.8, 0.8);
+}
+
+void MainWindow::zoomReset()
+{
+    ui->graphicsView->resetTransform();
 }
