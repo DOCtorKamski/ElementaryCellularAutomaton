@@ -19,6 +19,7 @@ public:
     ~MainWindow();
 
 private:
+    void setInitLine();
     void setupAutomaton();
     void runAutomaton(ECA *automaton, uint num_generations);
     void drawState(std::vector<std::vector<bool>> state, uint pixelSize);

@@ -24,21 +24,24 @@ MainWindow::MainWindow(QWidget *parent)
     QGraphicsScene *scene = new QGraphicsScene();
     ui->graphicsView->setScene(scene);
     scene->clear();
-    scene->setBackgroundBrush(QBrush(background));
-
-    // init 1 life cell in center
-    gen_length = 100;
-    this->init.reserve(gen_length);
-    for (int i = 0; i < gen_length; ++i){
-        init.push_back(false);
-    }
-    this->init[50] = true;
-
+    scene->setBackgroundBrush(QBrush(background));    
 }
 
 MainWindow::~MainWindow()
 {
     delete ui;
+}
+
+void MainWindow::setInitLine()
+{
+    // init 1 life cell in center
+    init.clear();
+    gen_length = ui->spinBox_lineLength->value();
+    this->init.reserve(gen_length);
+    for (int i = 0; i < gen_length; ++i){
+        init.push_back(false);
+    }
+    this->init[gen_length/2] = true;
 }
 
 void MainWindow::setupAutomaton()
@@ -50,6 +53,7 @@ void MainWindow::setupAutomaton()
         rule.push_back(rule_string.at(i) == '1');
     }
 
+    setInitLine();
     this->automaton = new ECA(init, rule);
 }
 
