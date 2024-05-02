@@ -82,7 +82,7 @@ void MainWindow::runAutomaton(ECA *automaton, uint num_generations)
     ui->graphicsView->setBackgroundBrush(QBrush(background));
 
     automaton->computeMultipleGeneration((unsigned int)num_generations);
-    drawState(automaton->getState(), 5); //TODO change to spinbox in ui
+    drawState(automaton->getState(), 5); //TODO make ability to change cell_size on spinbox in ui
 }
 
 void MainWindow::drawState(std::vector<std::vector<bool>> state, uint cell_size)
@@ -137,17 +137,19 @@ void MainWindow::start()
 }
 
 //convert string of binary digits to decimal number
+// TODO: change for better algoritm
 int MainWindow::convertBinToDec(QString binary) {
     int decimal = 0;
     for(int i = 0; i < binary.length();  i++) {
         if(binary.at(i) == '1')
-            decimal += (int)pow(2, binary.length() - i - 1);
+            decimal += (int)pow(2, binary.length() - i - 1); // change C style cast
     }
     return decimal;
 }
 
 //convert decimal number to QString of 0's and 1's
 //the leading 0's are important for the ruleset
+// TODO: change for better algoritm
 QString MainWindow::convertDecToBin(int decimal) {
     QString binary;
 
@@ -167,16 +169,16 @@ QString MainWindow::convertDecToBin(int decimal) {
 
 //update decimal input field after binary ruleset was changed
 void MainWindow::readBinaryRuleset(QString binary) {
-    bool signalsBlocked = ui->spinBox_ruleDec->blockSignals(true);
+    bool signals_blocked = ui->spinBox_ruleDec->blockSignals(true);
     ui->spinBox_ruleDec->setValue(convertBinToDec(binary));
-    ui->spinBox_ruleDec->blockSignals(signalsBlocked);
+    ui->spinBox_ruleDec->blockSignals(signals_blocked);
 }
 
 //update binary ruleset input field after decimal ruleset was changed
 void MainWindow::readDecimalRuleset(int decimal) {
-    bool signalsBlocked = ui->lineEdit_rule->blockSignals(true);
+    bool signals_blocked = ui->lineEdit_rule->blockSignals(true);
     ui->lineEdit_rule->setText(convertDecToBin(decimal));
-    ui->lineEdit_rule->blockSignals(signalsBlocked);
+    ui->lineEdit_rule->blockSignals(signals_blocked);
 }
 
 void MainWindow::zoomIn() {
