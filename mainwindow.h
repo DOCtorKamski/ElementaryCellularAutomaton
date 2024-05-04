@@ -19,6 +19,8 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
+    void setGenerateButtonCollorStylesheet(const QString &newGenerateButtonCollorStylesheet);
+
 private:
     void setInitLine();
     void setupAutomaton();
@@ -27,6 +29,7 @@ private:
     void addImageToGraphicsView(QImage *image);
     int convertBinToDec(QString binary);
     QString convertDecToBin(int decimal);
+    QString generateButtonCollorStylesheet(QColor color);
 
     Ui::MainWindow *ui;
     int gen_length;
@@ -47,5 +50,8 @@ private slots:
     void zoomOut();
     void zoomReset();
     void saveImage();
+    void changeColorAlive();
+    void changeColorDead();
+    void changeColorBackground();
 };
 #endif // MAINWINDOW_H

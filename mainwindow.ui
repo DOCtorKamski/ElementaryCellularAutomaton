@@ -307,16 +307,9 @@
               </sizepolicy>
              </property>
              <property name="title">
-              <string>Change color</string>
+              <string>Color setting</string>
              </property>
-             <layout class="QGridLayout" name="gridLayout">
-              <item row="0" column="1">
-               <widget class="QPushButton" name="pushButton_changeColorLive">
-                <property name="text">
-                 <string/>
-                </property>
-               </widget>
-              </item>
+             <layout class="QFormLayout" name="formLayout">
               <item row="0" column="0">
                <widget class="QLabel" name="label_2">
                 <property name="sizePolicy">
@@ -330,10 +323,10 @@
                 </property>
                </widget>
               </item>
-              <item row="1" column="1">
-               <widget class="QPushButton" name="pushButton_changeColorDead">
+              <item row="0" column="1">
+               <widget class="QPushButton" name="pushButton_changeColorAlive">
                 <property name="text">
-                 <string/>
+                 <string>Change color</string>
                 </property>
                </widget>
               </item>
@@ -341,6 +334,13 @@
                <widget class="QLabel" name="label_3">
                 <property name="text">
                  <string>Dead cell: </string>
+                </property>
+               </widget>
+              </item>
+              <item row="1" column="1">
+               <widget class="QPushButton" name="pushButton_changeColorDead">
+                <property name="text">
+                 <string>Change color</string>
                 </property>
                </widget>
               </item>
@@ -360,7 +360,7 @@
               <item row="2" column="1">
                <widget class="QPushButton" name="pushButton_changeColorBackground">
                 <property name="text">
-                 <string/>
+                 <string>Change color</string>
                 </property>
                </widget>
               </item>

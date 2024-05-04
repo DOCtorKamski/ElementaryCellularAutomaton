@@ -3,6 +3,7 @@
 #include <QPixmap>
 #include <QFileDialog>
 #include <QMessageBox>
+#include <QColorDialog>
 
 MainWindow::MainWindow(QWidget *parent)
     : QMainWindow(parent)
@@ -18,13 +19,23 @@ MainWindow::MainWindow(QWidget *parent)
     connect(ui->pushButton_zoomMinus, SIGNAL(clicked()), this, SLOT(zoomOut()));
     connect(ui->pushButton_zoomPlus, SIGNAL(clicked()), this, SLOT(zoomIn()));
     connect(ui->pushButton_zoomReset, SIGNAL(clicked()), this, SLOT(zoomReset()));
+
     connect(ui->pushButton_saveImage, SIGNAL(clicked()), this, SLOT(saveImage()));
+
+    connect(ui->pushButton_changeColorAlive, SIGNAL(clicked()), this, SLOT(changeColorAlive()));
+    connect(ui->pushButton_changeColorDead, SIGNAL(clicked()), this, SLOT(changeColorDead()));
+    connect(ui->pushButton_changeColorBackground, SIGNAL(clicked()), this, SLOT(changeColorBackground()));
 
 
     //default colors
-    alive = QColor(250, 250, 250);
-    dead = QColor(0, 0, 0);
-    background = QColor (70, 70, 70);
+    alive = QColor(Qt::white);
+    dead = QColor(Qt::black);
+    background = QColor (Qt::darkGray);
+
+    //set color for buttons
+    ui->pushButton_changeColorAlive->setStyleSheet(generateButtonCollorStylesheet(alive));
+    ui->pushButton_changeColorDead->setStyleSheet(generateButtonCollorStylesheet(dead));
+    ui->pushButton_changeColorBackground->setStyleSheet(generateButtonCollorStylesheet(background));
 
     //setup QGraphicsScene
     scene = new QGraphicsScene();
@@ -210,4 +221,33 @@ void MainWindow::saveImage()
 
     if(!image_buffer->save(filename))
         QMessageBox::information(this, "Error while saving image", "Image not saved!");
+}
+
+void MainWindow::changeColorAlive()
+{
+    alive = QColorDialog::getColor(alive, this, "Set Alive cell color");
+    ui->pushButton_changeColorAlive->setStyleSheet(generateButtonCollorStylesheet(alive));
+}
+
+void MainWindow::changeColorDead()
+{
+    dead = QColorDialog::getColor(dead, this, "Set Dead cell color");
+    ui->pushButton_changeColorDead->setStyleSheet(generateButtonCollorStylesheet(dead));
+}
+
+void MainWindow::changeColorBackground()
+{
+    background = QColorDialog::getColor(background, this, "Set Background color");
+    ui->pushButton_changeColorBackground->setStyleSheet(generateButtonCollorStylesheet(background));
+}
+
+//give QString stylesheet and change text color to white/black for buttons
+QString MainWindow::generateButtonCollorStylesheet(QColor color)
+{
+    QColor text_color;
+    if(color.value() >= 140)
+        text_color = QColor(Qt::black);
+    else
+        text_color = QColor(Qt::white);
+    return QString("background-color: " + color.name() + "; color: " + text_color.name() + "; ");
 }
