@@ -93,16 +93,16 @@ void MainWindow::runAutomaton(ECA *automaton, uint num_generations)
     ui->graphicsView->setBackgroundBrush(QBrush(background));
 
     automaton->computeMultipleGeneration((unsigned int)num_generations);
-    drawState(automaton->getState(), 5); //TODO make ability to change cell_size on spinbox in ui
+    drawState(automaton->getState(), ui->spinBox_sizeCell_x->value(), ui->spinBox_sizeCell_y->value());
 }
 
-void MainWindow::drawState(std::vector<std::vector<bool>> state, uint cell_size)
+void MainWindow::drawState(std::vector<std::vector<bool>> state, uint cell_size_x, uint cell_size_y)
 {
     if (state.empty())
         return;
 
-    int img_size_x = state.at(0).size() * cell_size;
-    int img_size_y = state.size() * cell_size;
+    int img_size_x = state.at(0).size() * cell_size_x;
+    int img_size_y = state.size() * cell_size_y;
 
     if (image_buffer){
         delete image_buffer;
@@ -113,15 +113,15 @@ void MainWindow::drawState(std::vector<std::vector<bool>> state, uint cell_size)
     for (uint y = 0; y < state.size(); ++y){
         for (uint x = 0; x < state.at(0).size(); ++x){
             // draw cell size subpixel
-            for(uint sub_y = 0; sub_y < cell_size; ++sub_y){
-                for(uint sub_x = 0; sub_x < cell_size; ++sub_x){
+            for(uint sub_y = 0; sub_y < cell_size_y; ++sub_y){
+                for(uint sub_x = 0; sub_x < cell_size_x; ++sub_x){
                     if (state.at(y).at(x)){
                         // cell alive, use live cell color
-                        image_buffer->setPixel(x * cell_size + sub_x, y * cell_size + sub_y, alive.rgb());
+                        image_buffer->setPixel(x * cell_size_x + sub_x, y * cell_size_y + sub_y, alive.rgb());
                     }
                     else {
                         // cell dead, use dead cell color
-                        image_buffer->setPixel(x * cell_size + sub_x, y * cell_size + sub_y, dead.rgb());
+                        image_buffer->setPixel(x * cell_size_x + sub_x, y * cell_size_y + sub_y, dead.rgb());
                     }
                 }
             } //subpixel

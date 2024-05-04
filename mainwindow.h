@@ -25,7 +25,7 @@ private:
     void setInitLine();
     void setupAutomaton();
     void runAutomaton(ECA *automaton, uint num_generations);
-    void drawState(std::vector<std::vector<bool>> state, uint pixelSize);
+    void drawState(std::vector<std::vector<bool>> state, uint cell_size_x, uint cell_size_y);
     void addImageToGraphicsView(QImage *image);
     int convertBinToDec(QString binary);
     QString convertDecToBin(int decimal);
