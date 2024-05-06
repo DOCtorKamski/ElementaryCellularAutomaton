@@ -138,11 +138,13 @@ void MainWindow::addImageToGraphicsView(QImage *image)
     QPixmap pixmap = QPixmap();
     pixmap.convertFromImage(*image);
     ui->graphicsView->scene()->addPixmap(pixmap);
+    ui->graphicsView->setSceneRect(pixmap.rect());
 }
 
 void MainWindow::start()
 {
     ui->graphicsView->scene()->clear();
+
     setupAutomaton();
     runAutomaton(automaton, ui->spinBox_numGens->value());
 }
