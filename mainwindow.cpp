@@ -13,7 +13,7 @@ MainWindow::MainWindow(QWidget *parent)
 
     connect(ui->pushButton_start, SIGNAL(clicked()), this, SLOT(start()));
 
-    connect(ui->lineEdit_rule, SIGNAL(textChanged(QString)), this, SLOT(readBinaryRuleset(QString)));
+    connect(ui->lineEdit_ruleBin, SIGNAL(textChanged(QString)), this, SLOT(readBinaryRuleset(QString)));
     connect(ui->spinBox_ruleDec, SIGNAL(valueChanged(int)), this, SLOT(readDecimalRuleset(int)));
 
     connect(ui->pushButton_zoomMinus, SIGNAL(clicked()), this, SLOT(zoomOut()));
@@ -75,7 +75,7 @@ void MainWindow::setupAutomaton()
 {
     std::vector<bool> rule;
     // parse rule
-    QString rule_string = ui->lineEdit_rule->text();
+    QString rule_string = ui->lineEdit_ruleBin->text();
     for (int i=0; i < 8; ++i){
         rule.push_back(rule_string.at(i) == '1');
     }
@@ -144,25 +144,23 @@ void MainWindow::addImageToGraphicsView(QImage *image)
 void MainWindow::start()
 {
     ui->graphicsView->scene()->clear();
-
+    checkBinaryRuleset();   //TODO change check method
     setupAutomaton();
     runAutomaton(automaton, ui->spinBox_numGens->value());
 }
 
 //convert string of binary digits to decimal number
-// TODO: change for better algoritm
 int MainWindow::convertBinToDec(QString binary) {
     int decimal = 0;
     for(int i = 0; i < binary.length();  i++) {
         if(binary.at(i) == '1')
-            decimal += (int)pow(2, binary.length() - i - 1); // change C style cast
+            decimal += pow(2, binary.length() - i - 1);
     }
     return decimal;
 }
 
 //convert decimal number to QString of 0's and 1's
 //the leading 0's are important for the ruleset
-// TODO: change for better algoritm
 QString MainWindow::convertDecToBin(int decimal) {
     QString binary;
 
@@ -181,17 +179,30 @@ QString MainWindow::convertDecToBin(int decimal) {
 }
 
 //update decimal input field after binary ruleset was changed
+// TODO BUG if change "lineEdit_ruleBin" to less then 8 simbol programm crash
 void MainWindow::readBinaryRuleset(QString binary) {
+    binary.replace("_","0");
     bool signals_blocked = ui->spinBox_ruleDec->blockSignals(true);
     ui->spinBox_ruleDec->setValue(convertBinToDec(binary));
     ui->spinBox_ruleDec->blockSignals(signals_blocked);
 }
+//TODO change check metod, now chan before start()
+ void MainWindow::checkBinaryRuleset()
+{
+    QString binary = ui->lineEdit_ruleBin->text();
+    if (binary.length() < 8) {
+        while (binary.length() < 8) {
+            binary.push_back('0');
+        }
+    }
+    ui->lineEdit_ruleBin->setText(binary);
+}
 
 //update binary ruleset input field after decimal ruleset was changed
 void MainWindow::readDecimalRuleset(int decimal) {
-    bool signals_blocked = ui->lineEdit_rule->blockSignals(true);
-    ui->lineEdit_rule->setText(convertDecToBin(decimal));
-    ui->lineEdit_rule->blockSignals(signals_blocked);
+    bool signals_blocked = ui->lineEdit_ruleBin->blockSignals(true);
+    ui->lineEdit_ruleBin->setText(convertDecToBin(decimal));
+    ui->lineEdit_ruleBin->blockSignals(signals_blocked);
 }
 
 void MainWindow::zoomIn() {

@@ -45,6 +45,7 @@ private:
 private slots:
     void start();
     void readBinaryRuleset(QString binary);
+    void checkBinaryRuleset();
     void readDecimalRuleset(int decimal);
     void zoomIn();
     void zoomOut();
