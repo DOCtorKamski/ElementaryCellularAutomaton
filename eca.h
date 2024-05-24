@@ -7,7 +7,6 @@ class ECA
 {
 public:
     ECA();
-    ECA(std::vector<bool> init_state);
     ECA(std::vector<bool> init_state, std::vector<bool> rule);
 
     std::vector< std::vector<bool> > getState();

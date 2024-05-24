@@ -144,7 +144,7 @@ void MainWindow::addImageToGraphicsView(QImage *image)
 void MainWindow::start()
 {
     ui->graphicsView->scene()->clear();
-    checkBinaryRuleset();   //TODO change check method
+    checkBinaryRuleset();
     setupAutomaton();
     runAutomaton(automaton, ui->spinBox_numGens->value());
 }
@@ -179,14 +179,12 @@ QString MainWindow::convertDecToBin(int decimal) {
 }
 
 //update decimal input field after binary ruleset was changed
-// TODO BUG if change "lineEdit_ruleBin" to less then 8 simbol programm crash
 void MainWindow::readBinaryRuleset(QString binary) {
-    binary.replace("_","0");
     bool signals_blocked = ui->spinBox_ruleDec->blockSignals(true);
     ui->spinBox_ruleDec->setValue(convertBinToDec(binary));
     ui->spinBox_ruleDec->blockSignals(signals_blocked);
 }
-//TODO change check metod, now chan before start()
+//TODO change check metod, now check before start()
  void MainWindow::checkBinaryRuleset()
 {
     QString binary = ui->lineEdit_ruleBin->text();

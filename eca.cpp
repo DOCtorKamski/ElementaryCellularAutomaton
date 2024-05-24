@@ -7,7 +7,6 @@ ECA::ECA() {
     }
 }
 
-
 ECA::ECA(std::vector<bool> init_state, std::vector<bool> rule){
     this->state.push_back(init_state);
     this->rule = rule;

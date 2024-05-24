@@ -255,10 +255,10 @@
                  <string>BBBBBBBB;_</string>
                 </property>
                 <property name="text">
-                 <string>00011111</string>
+                 <string>01101110</string>
                 </property>
                 <property name="cursorPosition">
-                 <number>0</number>
+                 <number>8</number>
                 </property>
                 <property name="readOnly">
                  <bool>false</bool>

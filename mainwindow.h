@@ -19,7 +19,6 @@ public:
     MainWindow(QWidget *parent = nullptr);
     ~MainWindow();
 
-    void setGenerateButtonCollorStylesheet(const QString &newGenerateButtonCollorStylesheet);
 
 private:
     void setInitLine();
@@ -36,7 +35,7 @@ private:
     std::vector<bool> init;
     ECA *automaton = nullptr;
     QImage *image_buffer = nullptr;
-    QGraphicsScene *scene = nullptr;
+    QGraphicsScene *scene;
     QColor alive;
     QColor dead;
     QColor background;
